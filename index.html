@@ -4330,5 +4330,23 @@ em { font-style: normal; }
     });
   })();
 </script>
+<script>
+  /* ============================================================
+     Meta Lead イベント（2026-07-21 追加）
+     無料相談CTA（[data-form-cta]）クリック時に Lead を発火。
+     広告セットの最適化イベントを「Lead」にするための計測点。
+     1ページビューにつき1回のみ発火（連打の重複計上を防止）。
+  ============================================================ */
+  (function () {
+    var fired = false;
+    document.querySelectorAll('[data-form-cta]').forEach(function (a) {
+      a.addEventListener('click', function () {
+        if (fired || typeof window.fbq !== 'function') return;
+        fired = true;
+        window.fbq('track', 'Lead');
+      });
+    });
+  })();
+</script>
 </body>
 </html>
